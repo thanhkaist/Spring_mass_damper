@@ -1,4 +1,4 @@
-# Spring–Mass–Damper Control Simulation
+# spring-mass-damper-simulation
 
 This repository contains simple Python simulations of a **spring–mass–damper** system controlled with:
 
