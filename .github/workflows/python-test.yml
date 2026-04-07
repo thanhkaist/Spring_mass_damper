@@ -9,6 +9,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    strategy:
+      matrix:
+        script: [PD.py, PID.py]
 
     steps:
       - uses: actions/checkout@v4
@@ -19,17 +25,12 @@ jobs:
           python-version: "3.x"
 
       - name: Install dependencies
-        run: pip install numpy matplotlib
+        run: pip install "numpy>=1.20" "matplotlib>=3.5"
 
       - name: Check syntax
-        run: python -m py_compile PD.py PID.py
+        run: python -m py_compile ${{ matrix.script }}
 
-      - name: Run PD controller script
+      - name: Run ${{ matrix.script }}
         env:
           MPLBACKEND: Agg
-        run: python PD.py
-
-      - name: Run PID controller script
-        env:
-          MPLBACKEND: Agg
-        run: python PID.py
+        run: python ${{ matrix.script }}
