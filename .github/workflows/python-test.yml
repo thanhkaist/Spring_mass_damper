@@ -1,0 +1,36 @@
+name: Test Python Scripts
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    strategy:
+      matrix:
+        script: [PD.py, PID.py]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install "numpy>=1.20" "matplotlib>=3.5"
+
+      - name: Check syntax
+        run: python -m py_compile ${{ matrix.script }}
+
+      - name: Run ${{ matrix.script }}
+        env:
+          MPLBACKEND: Agg
+        run: python ${{ matrix.script }}
