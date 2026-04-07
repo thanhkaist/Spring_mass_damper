@@ -1,0 +1,35 @@
+name: Test Python Scripts
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install numpy matplotlib
+
+      - name: Check syntax
+        run: python -m py_compile PD.py PID.py
+
+      - name: Run PD controller script
+        env:
+          MPLBACKEND: Agg
+        run: python PD.py
+
+      - name: Run PID controller script
+        env:
+          MPLBACKEND: Agg
+        run: python PID.py
