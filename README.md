@@ -11,9 +11,9 @@ Both scripts numerically integrate the system dynamics using a 4th-order Rungeâ€
 
 The mechanical plant is modeled as:
 
-\[
+$$
 m\ddot{x} + c\dot{x} + kx = F
-\]
+$$
 
 where:
 
